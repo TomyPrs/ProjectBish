@@ -53,15 +53,8 @@ def time_formatter(seconds: int) -> str:
     return tmp[:-2]
 
 
-def human_to_bytes(size: str) -> int:
-    units = {
-        "M": 2**20, "MB": 2**20,
-        "G": 2**30, "GB": 2**30,
-        "T": 2**40, "TB": 2**40
-    }
-
-    size = size.upper()
-    if not re.match(r' ', size):
-        size = re.sub(r'([KMGT])', r' \1', size)
-    number, unit = [string.strip() for string in size.split()]
-    return int(float(number)*units[unit])
+def human_to_byte(size):
+  factors = {'B': 1, 'KB':1024, 'MB':1048576, 'GB': 1073741824, 'TB': 1099511627776, 'PB': 1125899906842624, 'EB':1152921504606846976 , 'ZB': 1180591620717411303424, 'YB': 1208925819614629174706176}
+  if size[-2:] in factors:
+    return factors[size[-2:]]*float(size[:-2])
+  return float(size[:-1])
